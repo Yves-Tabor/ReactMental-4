@@ -6,6 +6,15 @@ import React, { useState, useEffect } from 'react';
 function NameTransfer() {
   const initialNames = ['Alice', 'Bob', 'Charlie', 'David', 'Eve'];
   const [names, setNames] = useState(initialNames);
+  const [transferred, setTransferred] = useState([]);
+
+  useEffect(()=>{
+    names.forEach((name, index) => {
+      setTimeout(()=>{
+        setTransferred(prev=> [...new Set([...prev, name])])
+      }, (index + 1) * 1000)
+    })
+  }, [names])
 
   return (
     <div>
@@ -19,7 +28,7 @@ function NameTransfer() {
 
       <h3>Transferred Names</h3>
       <ul  style={{backgroundColor:"green"}}>
-        {names.map((name, index) => (
+        {transferred.map((name, index) => (
           <li key={index}>{name}</li>
         ))}
       </ul>
